@@ -578,12 +578,17 @@ impl_runtime_apis! {
 }
 
 parameter_types! {
-	pub const LaunchPeriod: BlockNumber = 28 * 24 * 60 * MINUTES;
-	pub const VotingPeriod: BlockNumber = 28 * 24 * 60 * MINUTES;
-	pub const FastTrackVotingPeriod: BlockNumber = 3 * 24 * 60 * MINUTES;
+	// pub const LaunchPeriod: BlockNumber = 28 * 24 * 60 * MINUTES;
+	// pub const VotingPeriod: BlockNumber = 28 * 24 * 60 * MINUTES;
+	// pub const FastTrackVotingPeriod: BlockNumber = 3 * 24 * 60 * MINUTES;
+	// pub const EnactmentPeriod: BlockNumber = 30 * 24 * 60 * MINUTES;
+	// pub const CooloffPeriod: BlockNumber = 28 * 24 * 60 * MINUTES;
+	pub const LaunchPeriod: BlockNumber = 6 * MINUTES;
+	pub const VotingPeriod: BlockNumber = 6 * MINUTES;
+	pub const FastTrackVotingPeriod: BlockNumber = 1 * MINUTES;
+	pub const EnactmentPeriod: BlockNumber = 7 * MINUTES;
+	pub const CooloffPeriod: BlockNumber = 6 * MINUTES;
 	pub const MinimumDeposit: Balance = 100 * DOLLARS;
-	pub const EnactmentPeriod: BlockNumber = 30 * 24 * 60 * MINUTES;
-	pub const CooloffPeriod: BlockNumber = 28 * 24 * 60 * MINUTES;
 	pub const MaxProposals: u32 = 100;
 }
 
