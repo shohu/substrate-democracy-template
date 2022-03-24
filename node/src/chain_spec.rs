@@ -2,13 +2,16 @@ use node_template_runtime::{
 	AccountId, AuraConfig, BalancesConfig, GenesisConfig, GrandpaConfig, Signature, SudoConfig,
 	SystemConfig, WASM_BINARY,
 	// Add
-	CouncilConfig, DemocracyConfig, TechnicalCommitteeConfig,
+	CouncilConfig, DemocracyConfig, TechnicalCommitteeConfig, ElectionsConfig,
+	constants::currency::*,
 };
 use sc_service::ChainType;
 use sp_consensus_aura::sr25519::AuthorityId as AuraId;
 use sp_core::{sr25519, Pair, Public};
 use sp_finality_grandpa::AuthorityId as GrandpaId;
 use sp_runtime::traits::{IdentifyAccount, Verify};
+
+pub use node_primitives::{Balance};
 
 // The URL for the telemetry server.
 // const STAGING_TELEMETRY_URL: &str = "wss://telemetry.polkadot.io/submit/";
@@ -135,6 +138,8 @@ fn testnet_genesis(
 	_enable_println: bool,
 ) -> GenesisConfig {
 	let num_endowed_accounts = endowed_accounts.len();
+	const ENDOWMENT: Balance = 10_000_000 * DOLLARS;
+	const STASH: Balance = ENDOWMENT / 1000;
 	GenesisConfig {
 		system: SystemConfig {
 			// Add Wasm runtime to storage.
@@ -167,5 +172,13 @@ fn testnet_genesis(
 			phantom: Default::default(),
 		},
 		treasury: Default::default(),
+		elections: ElectionsConfig {
+			members: endowed_accounts
+				.iter()
+				.take((num_endowed_accounts + 1) / 2)
+				.cloned()
+				.map(|member| (member, STASH))
+				.collect(),
+		},
 	}
 }
